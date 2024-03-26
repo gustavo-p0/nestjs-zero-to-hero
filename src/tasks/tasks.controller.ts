@@ -7,47 +7,45 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { CreateTaskDTO } from './dto/create-task.dto';
 import { GetTasksFilterDTO } from './dto/get-tasks-filter.dto';
 import { UpdateTaskStatusDTO } from './dto/update-task-status.dto';
-import { Task } from './task.model';
+import { Task } from './task.entity';
 import { TasksService } from './tasks.service';
 
+@UseGuards(AuthGuard())
 @Controller('tasks')
 export class TasksController {
   constructor(private tasksService: TasksService) {}
 
-  // @Post()
-  // create(@Body('title') title, @Body('description') description): Task {
-  //   return this.tasksService.save(title, description);
-  // }
-
   @Post()
-  create(@Body() createTaskDTO: CreateTaskDTO): Task {
-    return this.tasksService.save(createTaskDTO);
+  create(@Body() createTaskDTO: CreateTaskDTO): Promise<Task> {
+    return this.tasksService.create(createTaskDTO);
   }
 
   @Get()
-  getTasks(@Query() filterDTO: GetTasksFilterDTO): Task[] {
-    if (Object.keys(filterDTO).length) {
-      return this.tasksService.getTasksWithFilters(filterDTO);
-    }
-    return this.tasksService.getAll();
+  get(@Query() filterDTO: GetTasksFilterDTO): Promise<Task[]> {
+    return this.tasksService.getTasks(filterDTO);
   }
 
   @Get('/:id')
-  getById(@Param('id') id: string): Task {
+  getById(@Param('id') id: string): Promise<Task> {
     return this.tasksService.getById(id);
   }
 
   @Delete('/:id')
-  delete(@Param('id') id: string): void {
-    this.tasksService.remove(id);
+  delete(@Param('id') id: string): Promise<void> {
+    return this.tasksService.remove(id);
   }
 
   @Patch('/:id/status')
-  update(@Param('id') id: string, @Body() status: UpdateTaskStatusDTO): Task {
+  update(
+    @Param('id') id: string,
+    @Body() status: UpdateTaskStatusDTO,
+  ): Promise<Task> {
     return this.tasksService.update(id, status);
   }
 }
