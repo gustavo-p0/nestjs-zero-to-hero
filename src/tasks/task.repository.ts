@@ -3,8 +3,8 @@ import { User } from 'src/auth/user.entity';
 import { DataSource, Repository } from 'typeorm';
 import { CreateTaskDTO } from './dto/create-task.dto';
 import { GetTasksFilterDTO } from './dto/get-tasks-filter.dto';
-import { TaskStatus } from './task-status.enum';
-import { Task } from './task.entity';
+import { Task } from './entities/task.entity';
+import { TaskStatus } from './enums/task-status.enum';
 
 @Injectable()
 export class TaskRepository extends Repository<Task> {
