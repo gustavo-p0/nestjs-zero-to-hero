@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { APP_FILTER } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from 'src/auth/auth.module';
-import { Task } from 'src/tasks/task.entity';
+import { User } from 'src/auth/entities/user.entity';
+import { Task } from 'src/tasks/entities/task.entity';
 import { TasksModule } from '../tasks/tasks.module';
 import { HttpExceptionFilter } from './exceptions/http-exception.filter';
-import { User } from 'src/auth/user.entity';
 @Module({
   providers: [
     {
