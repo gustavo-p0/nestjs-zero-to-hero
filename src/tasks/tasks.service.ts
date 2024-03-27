@@ -4,11 +4,11 @@ import { CreateTaskDTO } from './dto/create-task.dto';
 import { GetTasksFilterDTO } from './dto/get-tasks-filter.dto';
 import { UpdateTaskStatusDTO } from './dto/update-task-status.dto';
 import { Task } from './entities/task.entity';
-import { TaskRepository } from './task.repository';
+import { TasksRepository } from './tasks.repository';
 
 @Injectable()
 export class TasksService {
-  constructor(private tasksRepository: TaskRepository) {}
+  constructor(private tasksRepository: TasksRepository) {}
 
   async create(
     createTaskDTO: CreateTaskDTO,

@@ -11,6 +11,7 @@ async function bootstrap() {
 
   const port = 3000;
   await app.listen(port);
+  logger.log(`Estágio de desenvolvimento: ${process.env?.STAGE.toUpperCase()}`);
   logger.log(`Aplicação rodando na porta ${port}`);
 }
 bootstrap();
